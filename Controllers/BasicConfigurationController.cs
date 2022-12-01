@@ -5,24 +5,24 @@ namespace dotnet_configuration_options.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class BasicConfigurationController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<BasicConfigurationController> _logger;
         private readonly IConfiguration _configuration;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger,IConfiguration configuration)
+        public BasicConfigurationController(ILogger<BasicConfigurationController> logger,IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet(Name = "GetConfiguration")]
+        public HomeApi Get()
         {
             var x = _configuration.GetSection("HomeApi");
             Console.WriteLine(x.GetValue<string>("stringKey"));
@@ -33,19 +33,11 @@ namespace dotnet_configuration_options.Controllers
             HomeApi homeApi = new HomeApi();
 
             _configuration.Bind("HomeApi",homeApi);//HomeApi class properties must have setter
-            
 
-
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return homeApi;
         }
 
-        private class HomeApi
+        public class HomeApi
         {
 
             public string stringKey { get; set; }
