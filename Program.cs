@@ -3,6 +3,7 @@ using dotnet_configuration_options.Model;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.FeatureManagement;
 
 namespace dotnet_configuration_options
 {
@@ -18,8 +19,14 @@ namespace dotnet_configuration_options
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Configuration.AddAzureAppConfiguration("Endpoint=https://git-demo-app-configuration.azconfig.io;Id=d1SE;Secret=DO2PtIItnY7DBSCS72Zgi7iebpmxoABM2HZZCdFujy43iayZrAMzJQQJ99BFACBsN54hStKcAAABAZAC3j2H");
 
+            builder.Configuration.AddAzureAppConfiguration(options =>
+            {
+                options.Connect("Endpoint=https://git-demo-app-configuration.azconfig.io;Id=d1SE;Secret=DO2PtIItnY7DBSCS72Zgi7iebpmxoABM2HZZCdFujy43iayZrAMzJQQJ99BFACBsN54hStKcAAABAZAC3j2H");
+                options.UseFeatureFlags(); // Correct method name
+            });
+
+            
             /*
             //add configuration without using validate
             builder.Services.Configure<OptionsConfigurationApiModel>(builder.Configuration.GetSection("aboutapi"));
@@ -37,6 +44,10 @@ namespace dotnet_configuration_options
                 return true;
             }, "user must be authenticated").ValidateOnStart();
             */
+
+            // Enable Feature Management in Dependency Injection
+            builder.Services.AddFeatureManagement();
+            
             //using AddOptions to bind to use ValidateOnStart function Validate
             builder.Services.AddOptions<OptionsConfigurationApiModel>().Bind(builder.Configuration.GetSection("AboutApi")).ValidateOnStart();
             // using IValidateOptions instead of ValidateDataAnnotations or Validate
