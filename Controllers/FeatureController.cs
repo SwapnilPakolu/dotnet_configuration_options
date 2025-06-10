@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 public class FeatureController : ControllerBase
 {
     private readonly IFeatureManager _featureManager;
+    private readonly IFeatureManagerSnapshot _featureManagerSnapshot;
 
-    public FeatureController(IFeatureManager featureManager)
+    public FeatureController(IFeatureManager featureManager, IFeatureManagerSnapshot featureManagerSnapshot)
     {
         _featureManager = featureManager;
+        _featureManagerSnapshot = featureManagerSnapshot;
     }
 
     [HttpGet("{featureName}")]
