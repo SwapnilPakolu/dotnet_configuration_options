@@ -2,6 +2,7 @@ using dotnet_configuration_options.Configuration;
 using dotnet_configuration_options.Model;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration
 
 namespace dotnet_configuration_options
 {
@@ -17,6 +18,8 @@ namespace dotnet_configuration_options
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Configuration.AddAzureAppConfiguration("Endpoint=https://git-demo-app-configuration.azconfig.io;Id=d1SE;Secret=DO2PtIItnY7DBSCS72Zgi7iebpmxoABM2HZZCdFujy43iayZrAMzJQQJ99BFACBsN54hStKcAAABAZAC3j2H");
+
             /*
             //add configuration without using validate
             builder.Services.Configure<OptionsConfigurationApiModel>(builder.Configuration.GetSection("aboutapi"));
