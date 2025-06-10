@@ -24,6 +24,12 @@ namespace dotnet_configuration_options
             {
                 options.Connect("Endpoint=https://git-demo-app-configuration.azconfig.io;Id=d1SE;Secret=DO2PtIItnY7DBSCS72Zgi7iebpmxoABM2HZZCdFujy43iayZrAMzJQQJ99BFACBsN54hStKcAAABAZAC3j2H");
                 options.UseFeatureFlags(); // Correct method name
+                options.ConfigureRefresh(refreshOptions =>
+                   {
+                        refreshOptions.Register("FeatureManagement:FeatureFlags", refreshAll: true)
+                          .SetCacheExpiration(TimeSpan.FromSeconds(10)); // Refresh every 10 seconds
+                   });
+
             });
 
             
