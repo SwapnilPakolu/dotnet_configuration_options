@@ -2,7 +2,7 @@ using dotnet_configuration_options.Configuration;
 using dotnet_configuration_options.Model;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 namespace dotnet_configuration_options
 {
